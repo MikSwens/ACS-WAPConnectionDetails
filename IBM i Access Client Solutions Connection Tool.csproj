@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>ACS_WAPConnectionDetails</RootNamespace>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Copyright>IBM 2022</Copyright>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageIcon>Setting_Icon_64.png</PackageIcon>
+    <PackageIconUrl />
+    <Company>IBM</Company>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>WAPCON.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <StartupObject>ACS_WAPConnectionDetails.MyApplicationContext</StartupObject>
+    <ApplicationIcon>Setting_Icon_32.ico</ApplicationIcon>
+    <Product>IBM i Access Client Solutions</Product>
+    <Authors>Michael J. Swenson</Authors>
+    <Description>Tool to view/edit/create/remove system connection definitions for the IBM i Access Client Solutions Windows Application Package.</Description>
+    <PackageId>IBM i Access Client Solutions - Connection Details</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Documents\Downloads\icons\Setting\Setting_Icon_64.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
