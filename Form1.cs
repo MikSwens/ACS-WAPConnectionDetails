@@ -70,13 +70,15 @@ namespace ACS_WAPConnectionDetails
             {
                 cbSystem.Items.Add(connection.name);
             }
-            cbSystem.SelectedIndex = 0;
+            if (cbSystem.Items.Count > 0)
+                cbSystem.SelectedIndex = 0;
             // Add the users to the 'All users' list
             foreach (User user in allUsersConnections)
             {
                 cbUsers.Items.Add(user.userName);
             }
-            cbUsers.SelectedIndex = 0;
+            if (cbUsers.Items.Count > 0)
+                cbUsers.SelectedIndex = 0;
             // Without these calls the system list is truncated initiallyHello Ser
             rbCurrentUser_CheckedChanged(null, null);
             rbDefaultUser_CheckedChanged(null, null);
@@ -309,7 +311,8 @@ namespace ACS_WAPConnectionDetails
                 {
                     cbSystem.Items.Add(connection.name);
                 }
-                cbSystem.SelectedIndex = 0;
+                if (cbSystem.Items.Count > 0)
+                    cbSystem.SelectedIndex = 0;
             }
         }
 
@@ -328,7 +331,10 @@ namespace ACS_WAPConnectionDetails
                 {
                     cbSystem.Items.Add(connection.name);
                 }
-                try { cbSystem.SelectedIndex = 0; } catch { }
+                try { 
+                    if (cbSystem.Items.Count > 0)
+                    cbSystem.SelectedIndex = 0; 
+                } catch { }
             }
         }
 
@@ -345,7 +351,8 @@ namespace ACS_WAPConnectionDetails
             {
                 cbSystem.Items.Add(connection.name);
             }
-            cbSystem.SelectedIndex = 0;
+            if (cbSystem.Items.Count > 0)
+                cbSystem.SelectedIndex = 0;
         }
 
         /// <summary>

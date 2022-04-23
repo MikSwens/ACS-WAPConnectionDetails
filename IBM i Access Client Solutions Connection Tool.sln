@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBM i Access Client Solutions Connection Tool", "IBM i Access Client Solutions Connection Tool.csproj", "{64075F2C-AE8A-413D-8E1C-512F6C94F22D}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IBM i Access Client Solutions Connections Tool", "..\ACSWAPConSetup\ACSWAPConSetup.vdproj", "{A8A9D3B8-2AF8-4C1F-8290-6EEFAA7DADC8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{64075F2C-AE8A-413D-8E1C-512F6C94F22D} = {64075F2C-AE8A-413D-8E1C-512F6C94F22D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
