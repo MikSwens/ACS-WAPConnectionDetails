@@ -12,7 +12,6 @@
     <PackageIconUrl />
     <Company>IBM</Company>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>WAPCON.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <StartupObject>ACS_WAPConnectionDetails.MyApplicationContext</StartupObject>
     <ApplicationIcon>Setting_Icon_32.ico</ApplicationIcon>
