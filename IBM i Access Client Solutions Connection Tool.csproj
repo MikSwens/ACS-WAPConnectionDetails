@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>ACS_WAPConnectionDetails</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Copyright>IBM 2022</Copyright>
-    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <Copyright>IBM 2024</Copyright>
+    <PackageReleaseNotes>Updated for .Net 8.0</PackageReleaseNotes>
     <PackageIcon>Setting_Icon_64.png</PackageIcon>
     <PackageIconUrl />
     <Company>IBM</Company>
@@ -18,7 +18,12 @@
     <Product>IBM i Access Client Solutions</Product>
     <Authors>Michael J. Swenson</Authors>
     <Description>Tool to view/edit/create/remove system connection definitions for the IBM i Access Client Solutions Windows Application Package.</Description>
-    <PackageId>IBM i Access Client Solutions - Connection Details</PackageId>
+    <PackageId>IBM i Access Client Solutions - Windows Connection Configurator</PackageId>
+    <Title>ACS Windows Connection Configurator</Title>
+    <BaseOutputPath>C:\Users\2D3749897\source\repos\ACS_WAPConnectionDetailsBuild</BaseOutputPath>
+    <RepositoryUrl>https://github.com/MikSwens/ACS-WAPConnectionDetails</RepositoryUrl>
+    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +31,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -40,6 +50,13 @@
     <None Include="..\..\..\Documents\Downloads\icons\Setting\Setting_Icon_64.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
