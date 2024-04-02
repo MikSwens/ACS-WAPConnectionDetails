@@ -20,10 +20,19 @@
     <Description>Tool to view/edit/create/remove system connection definitions for the IBM i Access Client Solutions Windows Application Package.</Description>
     <PackageId>IBM i Access Client Solutions - Windows Connection Configurator</PackageId>
     <Title>ACS Windows Connection Configurator</Title>
-    <BaseOutputPath>C:\Users\2D3749897\source\repos\ACS_WAPConnectionDetailsBuild</BaseOutputPath>
+    <BaseOutputPath></BaseOutputPath>
     <RepositoryUrl>https://github.com/MikSwens/ACS-WAPConnectionDetails</RepositoryUrl>
     <FileVersion>1.0.0.1</FileVersion>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <IsPublishable>True</IsPublishable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <IsPublishable>True</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -55,7 +64,7 @@
 
   <ItemGroup>
     <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>

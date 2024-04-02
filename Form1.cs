@@ -134,7 +134,7 @@ namespace ACS_WAPConnectionDetails
                                 string strUserName = (string)key.GetValue(hive);
                                 if (strUserName.EndsWith("\\NTUSER.DAT\0", StringComparison.InvariantCultureIgnoreCase))
                                 {
-                                    strUserName = strUserName.Substring(0, strUserName.IndexOf("\\NTUSER.DAT"));
+                                    strUserName = strUserName.Substring(0, strUserName.ToUpper().IndexOf("\\NTUSER.DAT"));
                                     strUserName = strUserName.Substring(strUserName.LastIndexOf("\\") + 1);
                                     System.Diagnostics.Debug.WriteLine("User: " + strUserName + "\t SID: " + hive.Substring(15));
                                     localHive.Add(new User(strUserName, hive.Substring(15)));
