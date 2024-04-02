@@ -34,7 +34,7 @@ namespace ACS_WAPConnectionDetails
 
         // an arraylist of the connections for the default user
         private ArrayList defaultUserConnections = new ArrayList();
-        
+
         // ArrayList of Hosts objects
         private HostArray hosts = new HostArray();
 
@@ -96,7 +96,7 @@ namespace ACS_WAPConnectionDetails
             {
                 // Create the current user connections
                 WindowsIdentity identity = WindowsIdentity.GetCurrent();
-                currentUserConnections = ReadConnections(RegHive.CURRENT_USER, "software\\ibm\\client access express\\currentversion\\environments\\my connections");
+                currentUserConnections = ReadConnections(RegHive.CURRENT_USER, "software\\ibm\\client access express\\currentversion\\environments\\my connections", "");
             }
             else
             {   // if the application is running as Administrator the current user hive isn't really the desktop user.
@@ -107,7 +107,7 @@ namespace ACS_WAPConnectionDetails
                 rbCurrentUser.Text += "\n   * not available when running as administrator.";
             }
             // Create the default user connections
-            defaultUserConnections = ReadConnections(RegHive.ALL_USERS, ".DEFAULT\\Software\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections");
+            defaultUserConnections = ReadConnections(RegHive.ALL_USERS, ".DEFAULT\\Software\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections", ".DEFAULT");
             // Create a collection of all of the local users defined on the system with connections
             allUsersConnections = ReadAllUsers();
         }
@@ -151,10 +151,12 @@ namespace ACS_WAPConnectionDetails
                     {
                         using (RegistryKey key = Registry.Users.OpenSubKey(hive.sID + "\\SOFTWARE\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections"))
                         {
+
                             if (key != null)
                             {
                                 hive.setConnections(ReadConnections(RegHive.ALL_USERS,
-                                    hive.sID + "\\SOFTWARE\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections"));
+                                    hive.sID + "\\SOFTWARE\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections",
+                                    hive.userName));
                             }
                         }
                     }
@@ -184,8 +186,12 @@ namespace ACS_WAPConnectionDetails
         /// <param name="regHive">The section of the Windows registry.</param>
         /// <param name="strRegPath">The registry path for the specific Windows user.</param>
         /// <returns></returns>
-        protected ArrayList ReadConnections(RegHive regHive, string strRegPath)
+        protected ArrayList ReadConnections(RegHive regHive, string strRegPath, string userName)
         {
+            string strSystem = null;
+            string valueName = null;
+            ArrayList connections = new ArrayList();
+
             try
             {
                 RegistryKey key = null;
@@ -200,7 +206,7 @@ namespace ACS_WAPConnectionDetails
                 }
                 if (key != null)
                 {
-                    ArrayList connections = new ArrayList();
+                    //                    ArrayList connections = new ArrayList();
                     uint uiAdminSystemIndicator = 0;
                     uint uiConnectionTimeout = 0;
                     string strDescription = null;
@@ -213,54 +219,65 @@ namespace ACS_WAPConnectionDetails
                     uint uiSignonMode = 0;
                     string strUserId = null;
                     uint uiVersionReleaseLevel = 0;
-                    string strSystem = null;
+                    strSystem = null;
 
                     string[] systems = key.GetSubKeyNames();
                     foreach (string system in systems)
                     {
-                        strSystem = system;
-                        RegistryKey syskey = key.OpenSubKey(system);
-                        syskey = syskey.OpenSubKey("Communication");
-                        Object oKey = syskey.GetValue("Admin System Indicator");
-                        if (oKey != null)
+                        try
                         {
-                            uiAdminSystemIndicator = (uint)Convert.ToUInt32(oKey);
-                            //MessageBox.Show("Admin System Indicator: " + o.ToString(), system);
-                        }
-                        oKey = syskey.GetValue("Connect Timeout");
-                        if (oKey != null)
-                            uiConnectionTimeout = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("Description");
-                        if (oKey != null)
-                            strDescription = oKey.ToString();
-                        oKey = syskey.GetValue("IP Address");
-                        if (oKey != null)
-                            strIpAddress = oKey.ToString();
-                        oKey = syskey.GetValue("IP Address cache timeout");
-                        if (oKey != null)
-                            uiIpAddressCacheTimeout = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("IP address lookup mode");
-                        if (oKey != null)
-                            uiIpAddressLookupMode = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("Persistence Mode");
-                        if (oKey != null)
-                            uiPersistenceMode = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("Port lookup mode");
-                        if (oKey != null)
-                            uiPortLookupMode = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("Secure Sockets Layer");
-                        if (oKey != null)
-                            uiSecureSocketsLayer = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("Signon Mode");
-                        if (oKey != null)
-                            uiSignonMode = (uint)Convert.ToUInt32(oKey);
-                        oKey = syskey.GetValue("User ID");
-                        if (oKey != null)
-                            strUserId = oKey.ToString();
-                        oKey = syskey.GetValue("Version Release Level");
-                        if (oKey != null)
-                            uiVersionReleaseLevel = (uint)Convert.ToUInt32(oKey);
 
+                            strSystem = system;
+                            RegistryKey syskey = key.OpenSubKey(system);
+                            syskey = syskey.OpenSubKey("Communication");
+                            valueName = "Admin System Indicator";
+                            Object oKey = syskey.GetValue(valueName);
+                            if (oKey != null)
+                            {
+                                uiAdminSystemIndicator = (uint)Convert.ToUInt32(oKey);
+                                //MessageBox.Show("Admin System Indicator: " + o.ToString(), system);
+                            }
+                            oKey = syskey.GetValue(valueName = "Connect Timeout");
+                            if (oKey != null)
+                                uiConnectionTimeout = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "Description");
+                            if (oKey != null)
+                                strDescription = oKey.ToString();
+                            oKey = syskey.GetValue(valueName = "IP Address");
+                            if (oKey != null)
+                                strIpAddress = oKey.ToString();
+                            oKey = syskey.GetValue(valueName = "IP Address cache timeout");
+                            if (oKey != null)
+                                uiIpAddressCacheTimeout = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "IP address lookup mode");
+                            if (oKey != null)
+                                uiIpAddressLookupMode = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "Persistence Mode");
+                            if (oKey != null)
+                                uiPersistenceMode = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "Port lookup mode");
+                            if (oKey != null)
+                                uiPortLookupMode = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "Secure Sockets Layer");
+                            if (oKey != null)
+                                uiSecureSocketsLayer = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "Signon Mode");
+                            if (oKey != null)
+                                uiSignonMode = (uint)Convert.ToUInt32(oKey);
+                            oKey = syskey.GetValue(valueName = "User ID");
+                            if (oKey != null)
+                                strUserId = oKey.ToString();
+                            oKey = syskey.GetValue(valueName = "Version Release Level");
+                            if (oKey != null)
+                                uiVersionReleaseLevel = (uint)Convert.ToUInt32(oKey);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Error reading registry:\n" + e.Message + "\n\nDetails:\nUser: " + userName +
+                                "\nRegistry Hive: " + regHive + "\nRegistry Path: " + strRegPath + "\nhas invalid data for \nValue name: " + valueName +
+                                "\nFor system: " + strSystem + "\n\nDefault values will be displayed for this system.",
+                                "Error reading registry", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         connections.Add(new Connection(strSystem, uiAdminSystemIndicator, uiConnectionTimeout,
                             strDescription, strIpAddress, uiIpAddressCacheTimeout, uiIpAddressLookupMode,
                             uiPersistenceMode, uiPortLookupMode, uiSecureSocketsLayer, uiSignonMode,
@@ -272,7 +289,11 @@ namespace ACS_WAPConnectionDetails
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error reading registry:\n" + ex.Message, "Error reading registry", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error reading registry:\n" + ex.Message + "\n\nDetails:\nUser: " + userName +
+                    "\nRegistry Hive: " + regHive + "\nRegistry Path: " + strRegPath + "\nhas invalid data for \nValue name: " + valueName +
+                    "\nin system: " + strSystem,
+                    "Error reading registry", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return connections;
             }
             return null;
         }
@@ -331,10 +352,12 @@ namespace ACS_WAPConnectionDetails
                 {
                     cbSystem.Items.Add(connection.name);
                 }
-                try { 
+                try
+                {
                     if (cbSystem.Items.Count > 0)
-                    cbSystem.SelectedIndex = 0; 
-                } catch { }
+                        cbSystem.SelectedIndex = 0;
+                }
+                catch { }
             }
         }
 
@@ -889,7 +912,7 @@ namespace ACS_WAPConnectionDetails
                     "\\SOFTWARE\\IBM\\Client Access Express\\CurrentVersion\\Environments\\My Connections\\"
                     + connection);
             }
-            if(removed)
+            if (removed)
                 StatusLabel.Text = "System removed.";
             ReadRegistry();
             rbAllUsers_CheckedChanged(null, null);
@@ -910,7 +933,7 @@ namespace ACS_WAPConnectionDetails
                 switch (regHive)
                 {
                     case RegHive.CURRENT_USER:
-                        Registry.CurrentUser.DeleteSubKeyTree(strRegPath,true);
+                        Registry.CurrentUser.DeleteSubKeyTree(strRegPath, true);
                         break;
                     case RegHive.ALL_USERS:
                         Registry.Users.DeleteSubKeyTree(strRegPath, true);
