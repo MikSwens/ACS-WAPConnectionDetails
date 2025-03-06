@@ -6,7 +6,7 @@
     <RootNamespace>ACS_WAPConnectionDetails</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Copyright>IBM 2024</Copyright>
+    <Copyright>IBM 2025</Copyright>
     <PackageReleaseNotes>Updated for .Net 8.0</PackageReleaseNotes>
     <PackageIcon>Setting_Icon_64.png</PackageIcon>
     <PackageIconUrl />
@@ -22,8 +22,8 @@
     <Title>ACS Windows Connection Configurator</Title>
     <BaseOutputPath></BaseOutputPath>
     <RepositoryUrl>https://github.com/MikSwens/ACS-WAPConnectionDetails</RepositoryUrl>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
